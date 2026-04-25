@@ -1,0 +1,53 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const pubDate = post.data.pubDate.toISOString().slice(0, 10);
+const filename = `${post.id}.md`;
+---
+
+<BaseLayout title={`${post.data.title} · /fumi/notes`} pageId="articles">
+  <div class="article-main">
+    <div class="pane article-pane">
+      <div class="pane-header">
+        <span class="marker">■</span>
+        <span class="title">~/posts/{filename}</span>
+        <span class="rule">────────────────────────────────────────────────────────────</span>
+        <span class="controls">─ □ ×</span>
+      </div>
+
+      <div class="pane-body">
+        <article class="article">
+          <div class="article-meta">
+            <span>{pubDate}</span>
+            <span class="sep">·</span>
+            <span class={`type-${post.data.type}`}>{post.data.type}</span>
+            <span class="rule">────────────────────────────────────────</span>
+          </div>
+
+          <h1 class="article-title">{post.data.title}</h1>
+
+          <div class="article-body">
+            <Content />
+          </div>
+
+          <footer class="article-footer">
+            <span class="key">esc</span>
+            <a href="/">/home</a>
+          </footer>
+        </article>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
