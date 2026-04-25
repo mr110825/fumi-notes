@@ -14,11 +14,13 @@ pnpm-debug.log*
 
 
 # environment variables
-.env
-.env.production
+.env*
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# private project guide (Claude Code 運用ガイド・運用方針詳細)
+CLAUDE.md
