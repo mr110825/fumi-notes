@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const all = await getCollection('blog', ({ data }) => !data.draft);
+const sorted = all.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+
+const fillDots = '·'.repeat(180);
+
+type Entry = (typeof sorted)[number];
+const groupByMonth = new Map<string, Entry[]>();
+for (const entry of sorted) {
+  const ym = entry.data.pubDate.toISOString().slice(0, 7);
+  const arr = groupByMonth.get(ym) ?? [];
+  arr.push(entry);
+  groupByMonth.set(ym, arr);
+}
+
+const monthNames = [
+  'january', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december',
+];
+
+function monthName(ym: string): string {
+  const m = parseInt(ym.slice(5, 7), 10);
+  return monthNames[m - 1] ?? '';
+}
+
+function mmdd(date: Date): string {
+  return date.toISOString().slice(5, 10);
+}
+
+const tags = [
+  { num: '01', label: '#aws',           blurb: 'VPC / IAM / EKS 周辺',          count: 0 },
+  { num: '02', label: '#terraform',     blurb: 'module 設計・state の事故',      count: 0 },
+  { num: '03', label: '#linux',         blurb: 'systemd・名前解決・tcpdump',     count: 0 },
+  { num: '04', label: '#network',       blurb: 'TCP/IP を自分に説明し直す',      count: 0 },
+  { num: '05', label: '#security',      blurb: 'IAM・sts・policy の読み方',      count: 0 },
+  { num: '06', label: '#teaching',      blurb: '新卒研修・入門解説の副産物',     count: 0 },
+  { num: '07', label: '#fundamentals',  blurb: '毎年描き直す基礎',               count: 0 },
+  { num: '08', label: '#jot',           blurb: '今日知った小さなこと',           count: 0 },
+];
+---
+
+<BaseLayout pageId="home">
+  <main class="main">
+    <div class="left-col">
+      <section class="pane hero-pane">
+        <div class="pane-header">
+          <span class="marker">■</span>
+          <span class="title">~/home</span>
+          <span class="sep">·</span>
+          <span>readme.txt</span>
+          <span class="spacer"></span>
+          <span class="controls">─ □ ×</span>
+        </div>
+        <div class="pane-body">
+          <div class="hero-title"><span class="cursor">❯</span> notes.local</div>
+          <p class="hero-tagline">自分と、5年後の自分のための作業ログ。</p>
+          <p class="hero-about">
+            <span class="comment">// </span>IT実務3年。AWS / Linux / Terraform を中心に、手を動かしたぶんだけ書く。
+          </p>
+        </div>
+      </section>
+
+      <section class="pane articles-pane">
+        <div class="pane-header">
+          <span class="marker">■</span>
+          <span class="title">~/posts</span>
+          <span class="sep">·</span>
+          <span>{sorted.length}/{sorted.length}</span>
+          <span class="spacer"></span>
+          <span class="controls">─ □ ×</span>
+        </div>
+        <div class="pane-body scroll">
+          {sorted.length === 0 && (
+            <p class="articles-empty">
+              <span class="comment">// </span>no posts yet — coming soon.
+            </p>
+          )}
+          {[...groupByMonth.entries()].map(([ym, entries]) => (
+            <div class="month-group">
+              <div class="month-label">
+                <span>{ym}</span>
+                <span class="month-name">{monthName(ym)}</span>
+                <span class="fill-dots">{fillDots}</span>
+              </div>
+              <ul>
+                {entries.map((entry) => (
+                  <li class="article-row">
+                    <span class="article-date">{mmdd(entry.data.pubDate)}</span>
+                    <span class={`article-kind ${entry.data.type}`}>{entry.data.type}</span>
+                    <a href={`/posts/${entry.id}/`} class="article-link">
+                      {entry.data.type === 'jot' && <span class="jot-dot">•</span>}
+                      {entry.data.title}
+                    </a>
+                    <span class="article-tags">
+                      {entry.data.tags.map((t) => (
+                        <><span class="hash">#</span>{t}{' '}</>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+
+    <section class="pane tags-pane">
+      <div class="pane-header">
+        <span class="marker">■</span>
+        <span class="title">~/tags</span>
+        <span class="sep">·</span>
+        <span>{tags.length} tags</span>
+        <span class="spacer"></span>
+        <span class="controls">─ □ ×</span>
+      </div>
+      <div class="pane-body">
+        <ul class="tags-list">
+          {tags.map((tag) => (
+            <li>
+              <a href="#" class="tag-row">
+                <span class="tag-num">{tag.num}</span>
+                <span class="tag-label">{tag.label}</span>
+                <span class="tag-blurb">{tag.blurb}</span>
+                <span class="tag-count">{tag.count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="pane activity-pane">
+      <div class="pane-header">
+        <span class="marker">■</span>
+        <span class="title">~/activity</span>
+        <span class="sep">·</span>
+        <span>posts/month</span>
+        <span class="spacer"></span>
+        <span class="controls">─ □ ×</span>
+      </div>
+      <div class="pane-body">
+        <pre class="activity-chart">{`(no data yet)`}</pre>
+        <div class="activity-footer">
+          <span class="faint">──</span> last 30d:
+          <span class="green">+0 posts</span>
+          <span class="faint"> · </span>
+          <span class="orange">+0 jot</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

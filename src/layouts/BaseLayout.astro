@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  pageId?: string;
+}
+
+const { title = 'notes.local', pageId = 'home' } = Astro.props;
+const today = new Date().toISOString().slice(0, 10);
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="top-bar">
+      <span class="site-tag">notes.local</span>
+      <span class="dim">[0]</span>
+      <span class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</span>
+      <span class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</span>
+      <span class={`${pageId === 'tags' ? 'win-active' : 'dim'} win-tags`}>3:tags{pageId === 'tags' ? '*' : ''}</span>
+      <span class={`${pageId === 'about' ? 'win-active' : 'dim'} win-about`}>4:about{pageId === 'about' ? '*' : ''}</span>
+      <span class="spacer"></span>
+      <span class="dim size-desktop">132×42</span>
+      <span class="dim size-mobile">40×60</span>
+    </div>
+
+    <slot />
+
+    <div class="bottom-bar">
+      <span class="mode-tag">[normal]</span>
+      <a href="#">github</a>
+      <span class="sep">·</span>
+      <a href="#">about</a>
+      <span class="sep">·</span>
+      <a href="#">rss</a>
+      <span class="spacer"></span>
+      <span>notes.local</span>
+      <span class="sep">·</span>
+      <span>{today}</span>
+      <span class="sep">·</span>
+      <span>© {year}</span>
+    </div>
+  </body>
+</html>
