@@ -6,7 +6,7 @@ interface Props {
   pageId?: string;
 }
 
-const { title = 'notes.local', pageId = 'home' } = Astro.props;
+const { title = '/fumi/notes', pageId = 'home' } = Astro.props;
 const today = new Date().toISOString().slice(0, 10);
 const year = new Date().getFullYear();
 ---
@@ -26,7 +26,7 @@ const year = new Date().getFullYear();
   </head>
   <body>
     <div class="top-bar">
-      <span class="site-tag">notes.local</span>
+      <span class="site-tag">/fumi/notes</span>
       <span class="dim">[0]</span>
       <span class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</span>
       <span class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</span>
@@ -47,7 +47,7 @@ const year = new Date().getFullYear();
       <span class="sep">·</span>
       <a href="#">rss</a>
       <span class="spacer"></span>
-      <span>notes.local</span>
+      <span>/fumi/notes</span>
       <span class="sep">·</span>
       <span>{today}</span>
       <span class="sep">·</span>
