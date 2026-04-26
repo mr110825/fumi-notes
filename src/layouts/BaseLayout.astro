@@ -29,7 +29,7 @@ const year = new Date().getFullYear();
       <span class="site-tag">/fumi/notes</span>
       <span class="dim">[0]</span>
       <a href="/" class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</a>
-      <span class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</span>
+      <a href="/articles" class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</a>
       <span class={`${pageId === 'tags' ? 'win-active' : 'dim'} win-tags`}>3:tags{pageId === 'tags' ? '*' : ''}</span>
       <a href="/about" class={`${pageId === 'about' ? 'win-active' : 'dim'} win-about`}>4:about{pageId === 'about' ? '*' : ''}</a>
       <span class="spacer"></span>
