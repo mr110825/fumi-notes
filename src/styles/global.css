@@ -158,11 +158,17 @@ p { margin: 0; }
 }
 .hero-about {
   margin-top: 6px;
-  color: var(--dim);
+  color: var(--fg);
   font-size: 12px;
   max-width: 52ch;
 }
 .hero-about .comment { color: var(--faint); }
+.hero-about a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--faint);
+  transition: border-color 0.15s;
+}
+.hero-about a:hover { border-bottom-color: var(--accent); }
 
 /* ── Articles pane ──────────────────────────────── */
 .month-group { margin-bottom: 18px; }

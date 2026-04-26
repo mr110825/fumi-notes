@@ -28,10 +28,10 @@ const year = new Date().getFullYear();
     <div class="top-bar">
       <span class="site-tag">/fumi/notes</span>
       <span class="dim">[0]</span>
-      <span class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</span>
+      <a href="/" class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</a>
       <span class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</span>
       <span class={`${pageId === 'tags' ? 'win-active' : 'dim'} win-tags`}>3:tags{pageId === 'tags' ? '*' : ''}</span>
-      <span class={`${pageId === 'about' ? 'win-active' : 'dim'} win-about`}>4:about{pageId === 'about' ? '*' : ''}</span>
+      <a href="/about" class={`${pageId === 'about' ? 'win-active' : 'dim'} win-about`}>4:about{pageId === 'about' ? '*' : ''}</a>
       <span class="spacer"></span>
       <span class="dim size-desktop">132×42</span>
       <span class="dim size-mobile">40×60</span>

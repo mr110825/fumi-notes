@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # private project guide (Claude Code 運用ガイド・運用方針詳細)
 CLAUDE.md
+
+# Claude Code per-project local settings
+.claude/settings.local.json

@@ -16,32 +16,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <div class="pane-body">
           <div class="hero-title"><span class="cursor">❯</span> about</div>
-          <p class="hero-fullpath"><span class="comment">// </span>/home/fumi/notes/about</p>
-          <p class="hero-tagline">自分と、5年後の自分のための作業ログ。</p>
-
-          <p class="hero-about">
-            <span class="comment">// </span>IT実務3年。AWS / Linux / Terraform を中心に、
-            手を動かしたぶんだけ書きます。
-          </p>
-          <p class="hero-about">
-            <span class="comment">// </span>過去に何度か個人ブログを立ち上げては止めた経緯があり、
-            今回は「整備より実利用優先」で運用しています。
+          <p class="hero-tagline">// 管理人</p>fumi
+          <p class="hero-tagline">// サイトについて</p>
+          自分と、5年後の自分のための作業ログ<br>
+          過去に何度か個人ブログを立ち上げては止めた経緯があり、<br>
+          今回は「整備より実利用優先」で運用しています。
           </p>
 
+          <p class="hero-tagline">// links<p>
           <p class="hero-about">
-            <span class="comment">// stack</span><br />
-            Astro 6 + Content Collections / Cloudflare Pages /
-            tmux 風 MS-DOS / CUI レトロデザイン
-          </p>
-
-          <p class="hero-about">
-            <span class="comment">// links</span><br />
-            <a href="https://github.com/mr110825/fumi-notes">github: mr110825/fumi-notes</a>
-            <span class="sep"> · </span>
-            <a href="/rss.xml">rss</a>
+            <a href="https://github.com/mr110825/fumi-notes" target="_blank" rel="noopener noreferrer">github: mr110825/fumi-notes</a>
+            <br>
+            <a href="https://x.com/mr110825" target="_blank" rel="noopener noreferrer">x: mr110825</a>
+            <br>
+            <a href="/rss.xml" target="_blank" rel="noopener noreferrer">rss</a>
           </p>
         </div>
       </section>
     </div>
   </main>
 </BaseLayout>
+
+<style>
+  .hero-tagline { color: var(--accent); }
+  .hero-about a { color: var(--blue); }
+  .hero-about a:hover { border-bottom-color: var(--blue); }
+</style>
