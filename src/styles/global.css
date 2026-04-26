@@ -355,6 +355,7 @@ p { margin: 0; }
 .article-meta .sep { color: var(--faint); }
 .article-meta .type-post { color: var(--accent); }
 .article-meta .type-jot { color: var(--warm); }
+.article-meta .updated { color: var(--dim); }
 .article-meta .rule {
   flex: 1;
   color: var(--faint);

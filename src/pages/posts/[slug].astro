@@ -14,6 +14,8 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const pubDate = post.data.pubDate.toISOString().slice(0, 10);
+const updatedDate = post.data.updatedDate?.toISOString().slice(0, 10);
+const showUpdated = updatedDate && updatedDate !== pubDate;
 const filename = `${post.id}.md`;
 ---
 
@@ -38,6 +40,12 @@ const filename = `${post.id}.md`;
             <span>{pubDate}</span>
             <span class="sep">·</span>
             <span class={`type-${post.data.type}`}>{post.data.type}</span>
+            {showUpdated && (
+              <>
+                <span class="sep">·</span>
+                <span class="updated">updated {updatedDate}</span>
+              </>
+            )}
             <span class="rule">────────────────────────────────────────</span>
           </div>
 
