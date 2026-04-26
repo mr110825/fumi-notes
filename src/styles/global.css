@@ -493,6 +493,40 @@ p { margin: 0; }
   text-transform: uppercase;
 }
 
+.code-copy {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: var(--status);
+  border: 1px solid var(--rule);
+  color: var(--dim);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  padding: 2px 8px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s, border-color 0.15s, background 0.15s;
+}
+.article-body pre:hover .code-copy,
+.article-body pre:focus-within .code-copy,
+.code-copy:focus-visible { opacity: 1; }
+.code-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.code-copy.copied {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .code-copy { opacity: 1; }
+}
+
 .article-body blockquote {
   margin: 1.6em 0;
   padding: 4px 0 4px 20px;

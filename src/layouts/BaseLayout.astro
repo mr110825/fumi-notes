@@ -59,6 +59,35 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
     <slot />
 
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const blocks = document.querySelectorAll<HTMLPreElement>('.article-body pre');
+        blocks.forEach((pre) => {
+          const button = document.createElement('button');
+          button.className = 'code-copy';
+          button.type = 'button';
+          button.textContent = 'copy';
+          button.setAttribute('aria-label', 'コードをコピー');
+          button.addEventListener('click', async () => {
+            const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+            try {
+              await navigator.clipboard.writeText(code);
+              button.textContent = 'copied';
+              button.classList.add('copied');
+              setTimeout(() => {
+                button.textContent = 'copy';
+                button.classList.remove('copied');
+              }, 1500);
+            } catch {
+              button.textContent = 'failed';
+              setTimeout(() => { button.textContent = 'copy'; }, 1500);
+            }
+          });
+          pre.appendChild(button);
+        });
+      });
+    </script>
+
     <div class="bottom-bar">
       <span class="mode-tag">[normal]</span>
       <a href="https://github.com/mr110825/fumi-notes">github</a>
