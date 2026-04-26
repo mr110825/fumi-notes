@@ -29,7 +29,14 @@ Node.js 22.12 以上推奨(動作確認: 24.5 / Cloudflare ビルド: 24.13)。
 
 ## 記事を書く
 
-`src/content/blog/<slug>.md` に Markdown を配置:
+雛形生成:
+
+```sh
+scripts/new-post.sh "記事タイトル" --slug my-slug          # post
+scripts/new-post.sh "短いメモ"     --slug my-slug --type jot
+```
+
+`src/content/blog/YYYY-MM-DD-<slug>.md` を `draft: true` で生成する。手で書く場合は以下の Markdown を配置:
 
 ```yaml
 ---
