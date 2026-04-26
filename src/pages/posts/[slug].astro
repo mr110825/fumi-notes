@@ -17,7 +17,12 @@ const pubDate = post.data.pubDate.toISOString().slice(0, 10);
 const filename = `${post.id}.md`;
 ---
 
-<BaseLayout title={`${post.data.title} · /fumi/notes`} pageId="articles">
+<BaseLayout
+  title={`${post.data.title} · /fumi/notes`}
+  pageId="articles"
+  description={post.data.description}
+  ogType="article"
+>
   <div class="article-main">
     <div class="pane article-pane">
       <div class="pane-header">
@@ -37,6 +42,12 @@ const filename = `${post.id}.md`;
           </div>
 
           <h1 class="article-title">{post.data.title}</h1>
+
+          {post.data.description && (
+            <p class="article-description">
+              <span class="comment">// </span>{post.data.description}
+            </p>
+          )}
 
           <div class="article-body">
             <Content />

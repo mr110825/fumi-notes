@@ -368,9 +368,19 @@ p { margin: 0; }
   font-size: 28px;
   line-height: 1.4;
   color: var(--fg);
-  margin: 0 0 28px;
+  margin: 0 0 12px;
   letter-spacing: -0.005em;
 }
+
+.article-description {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--dim);
+  margin: 0 0 24px;
+  max-width: 60ch;
+}
+.article-description .comment { color: var(--faint); }
 
 .article-body {
   font-family: var(--sans);

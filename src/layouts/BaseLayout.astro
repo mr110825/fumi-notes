@@ -4,11 +4,20 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   pageId?: string;
+  description?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title = '/fumi/notes', pageId = 'home' } = Astro.props;
+const defaultDescription = 'fumi の個人ブログ。学習・所感・技術ログ。';
+const {
+  title = '/fumi/notes',
+  pageId = 'home',
+  description = defaultDescription,
+  ogType = 'website',
+} = Astro.props;
 const today = new Date().toISOString().slice(0, 10);
 const year = new Date().getFullYear();
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -17,6 +26,16 @@ const year = new Date().getFullYear();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content="/fumi/notes" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
