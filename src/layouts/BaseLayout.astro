@@ -28,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:site_name" content="/fumi/notes" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
