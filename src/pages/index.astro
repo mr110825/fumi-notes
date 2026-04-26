@@ -32,16 +32,64 @@ function mmdd(date: Date): string {
   return date.toISOString().slice(5, 10);
 }
 
-const tags = [
-  { num: '01', label: '#aws',           blurb: 'VPC / IAM / EKS 周辺',          count: 0 },
-  { num: '02', label: '#terraform',     blurb: 'module 設計・state の事故',      count: 0 },
-  { num: '03', label: '#linux',         blurb: 'systemd・名前解決・tcpdump',     count: 0 },
-  { num: '04', label: '#network',       blurb: 'TCP/IP を自分に説明し直す',      count: 0 },
-  { num: '05', label: '#security',      blurb: 'IAM・sts・policy の読み方',      count: 0 },
-  { num: '06', label: '#teaching',      blurb: '新卒研修・入門解説の副産物',     count: 0 },
-  { num: '07', label: '#fundamentals',  blurb: '毎年描き直す基礎',               count: 0 },
-  { num: '08', label: '#jot',           blurb: '今日知った小さなこと',           count: 0 },
+const tagCounts = new Map<string, number>();
+for (const entry of sorted) {
+  for (const tag of entry.data.tags) {
+    const key = tag.replace(/^#/, '').toLowerCase();
+    tagCounts.set(key, (tagCounts.get(key) ?? 0) + 1);
+  }
+}
+
+const tagDefs = [
+  { num: '01', slug: 'aws',          label: '#aws',          blurb: 'VPC / IAM / EKS 周辺' },
+  { num: '02', slug: 'terraform',    label: '#terraform',    blurb: 'module 設計・state の事故' },
+  { num: '03', slug: 'linux',        label: '#linux',        blurb: 'systemd・名前解決・tcpdump' },
+  { num: '04', slug: 'network',      label: '#network',      blurb: 'TCP/IP を自分に説明し直す' },
+  { num: '05', slug: 'security',     label: '#security',     blurb: 'IAM・sts・policy の読み方' },
+  { num: '06', slug: 'teaching',     label: '#teaching',     blurb: '新卒研修・入門解説の副産物' },
+  { num: '07', slug: 'fundamentals', label: '#fundamentals', blurb: '毎年描き直す基礎' },
+  { num: '08', slug: 'jot',          label: '#jot',          blurb: '今日知った小さなこと' },
 ];
+const tags = tagDefs.map((t) => ({
+  ...t,
+  count: tagCounts.get(t.slug) ?? 0,
+}));
+
+const now = new Date();
+type MonthBucket = { ym: string; posts: number; jots: number };
+const months: MonthBucket[] = [];
+for (let i = 5; i >= 0; i--) {
+  const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+  const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  months.push({ ym, posts: 0, jots: 0 });
+}
+for (const entry of sorted) {
+  const ym = entry.data.pubDate.toISOString().slice(0, 7);
+  const bucket = months.find((m) => m.ym === ym);
+  if (!bucket) continue;
+  if (entry.data.type === 'jot') bucket.jots++;
+  else bucket.posts++;
+}
+const barWidth = 8;
+const maxTotal = Math.max(1, ...months.map((m) => m.posts + m.jots));
+const activityChart = months
+  .map((m) => {
+    const total = m.posts + m.jots;
+    const filled = Math.round((total / maxTotal) * barWidth);
+    const bar = '█'.repeat(filled) + '·'.repeat(barWidth - filled);
+    return `${m.ym} ${bar} ${total}`;
+  })
+  .join('\n');
+
+const cutoff = new Date();
+cutoff.setDate(cutoff.getDate() - 30);
+let last30Posts = 0;
+let last30Jots = 0;
+for (const entry of sorted) {
+  if (entry.data.pubDate < cutoff) continue;
+  if (entry.data.type === 'jot') last30Jots++;
+  else last30Posts++;
+}
 ---
 
 <BaseLayout pageId="home">
@@ -146,12 +194,12 @@ const tags = [
         <span class="controls">─ □ ×</span>
       </div>
       <div class="pane-body">
-        <pre class="activity-chart">{`(no data yet)`}</pre>
+        <pre class="activity-chart">{activityChart}</pre>
         <div class="activity-footer">
           <span class="faint">──</span> last 30d:
-          <span class="green">+0 posts</span>
+          <span class="green">+{last30Posts} posts</span>
           <span class="faint"> · </span>
-          <span class="orange">+0 jot</span>
+          <span class="orange">+{last30Jots} jot</span>
         </div>
       </div>
     </section>
