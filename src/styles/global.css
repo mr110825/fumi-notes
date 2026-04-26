@@ -610,6 +610,7 @@ p { margin: 0; }
 .article-body img {
   display: block;
   max-width: 100%;
+  height: auto;
   margin: 1.8em auto;
   border: 1px solid var(--rule);
 }
