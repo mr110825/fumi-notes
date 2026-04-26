@@ -320,6 +320,9 @@ p { margin: 0; }
   display: flex;
   padding: 6px;
   min-height: 0;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 .article-pane { flex: 1; }
 
@@ -339,7 +342,7 @@ p { margin: 0; }
 }
 
 .article {
-  max-width: 72ch;
+  max-width: 92ch;
   margin: 0 auto;
 }
 
@@ -551,7 +554,7 @@ p { margin: 0; }
 }
 
 .article-footer {
-  max-width: 72ch;
+  max-width: 92ch;
   margin: 56px auto 0;
   padding-top: 20px;
   border-top: 1px dashed var(--rule);

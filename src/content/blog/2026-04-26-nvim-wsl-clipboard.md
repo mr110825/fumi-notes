@@ -30,7 +30,8 @@ sudo mv /tmp/win32yank.exe /usr/local/bin/
 echo "hello from wsl" | win32yank.exe -i && win32yank.exe -o
 ```
 
-往復で `hello from wsl` が出力され、Windows側でも `Ctrl+V` で貼れればOK。ここで動かない場合は Neovim 設定に進んでも解決しないので、PATH や `win32yank.exe` の実行権限を先に確認する。
+往復で `hello from wsl` が出力され、Windows側でも `Ctrl+V` で貼れればOK。
+ここで動かない場合は Neovim 設定に進んでも解決しないので、PATH や `win32yank.exe` の実行権限を先に確認する。
 
 ### 3. Neovim設定（`~/.config/nvim/init.lua`）
 
@@ -65,8 +66,10 @@ vim.g.clipboard = {
 
 今回の問題の原因は、WSL2 には Neovim から呼び出せる Windows クリップボード操作用コマンドが既定で用意されていないことだ。
 
-Neovim の仕様上、Neovim 自身がクリップボードを直接操作することはない。Neovim から外部コマンドに丸投げする設計となっており、macOS や Linux X11 では既定のコマンド（pbcopy / xclip 等）が利用できる。
+Neovim の仕様上、Neovim 自身がクリップボードを直接操作することはない。
+Neovim から外部コマンドに丸投げする設計となっており、macOS や Linux X11 では既定のコマンド（pbcopy / xclip 等）が利用できる。
 
-一方 WSL2 では、Linux 側のコマンド（xclip 等）は X11 セレクションを操作するもので Windows クリップボードには届かないため、Neovim から依頼できる橋渡しコマンドが存在しない状態になる。これが今回コピー＆ペーストができなかった原因である。
+一方 WSL2 では、Linux 側のコマンド（xclip 等）は X11 セレクションを操作するもので Windows クリップボードには届かないため、Neovim から依頼できる橋渡しコマンドが存在しない状態になる。
+これが今回コピー＆ペーストができなかった原因である。
 
 win32yank はこの欠落を埋めるコマンドであり、Windows ネイティブバイナリとして Win32 クリップボード API を直接操作するため、WSL2 から実行することで橋渡しを実現できる。
