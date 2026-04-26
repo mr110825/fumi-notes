@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const all = await getCollection('blog', ({ data }) => !data.draft);
+  const predefined = [
+    'aws', 'terraform', 'linux', 'network',
+    'security', 'teaching', 'fundamentals', 'jot',
+  ];
+  const fromPosts = new Set<string>();
+  for (const entry of all) {
+    for (const t of entry.data.tags) {
+      fromPosts.add(t.replace(/^#/, '').toLowerCase());
+    }
+  }
+  const slugs = new Set<string>([...predefined, ...fromPosts]);
+  return [...slugs].map((slug) => ({
+    params: { tag: slug },
+    props: {
+      slug,
+      posts: all
+        .filter((e) =>
+          e.data.tags.some((t) => t.replace(/^#/, '').toLowerCase() === slug),
+        )
+        .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()),
+    },
+  }));
+}
+
+const { slug, posts } = Astro.props;
+
+const fillDots = '·'.repeat(180);
+
+type Entry = (typeof posts)[number];
+const groupByMonth = new Map<string, Entry[]>();
+for (const entry of posts) {
+  const ym = entry.data.pubDate.toISOString().slice(0, 7);
+  const arr = groupByMonth.get(ym) ?? [];
+  arr.push(entry);
+  groupByMonth.set(ym, arr);
+}
+
+const monthNames = [
+  'january', 'february', 'march', 'april', 'may', 'june',
+  'july', 'august', 'september', 'october', 'november', 'december',
+];
+
+function monthName(ym: string): string {
+  const m = parseInt(ym.slice(5, 7), 10);
+  return monthNames[m - 1] ?? '';
+}
+
+function mmdd(date: Date): string {
+  return date.toISOString().slice(5, 10);
+}
+---
+
+<BaseLayout title={`#${slug} — /fumi/notes`} pageId="tags">
+  <main class="main">
+    <div class="left-col">
+      <section class="pane articles-pane">
+        <div class="pane-header">
+          <span class="marker">■</span>
+          <span class="title">~/tags/{slug}</span>
+          <span class="sep">·</span>
+          <span>{posts.length}/{posts.length}</span>
+          <span class="spacer"></span>
+          <span class="controls">─ □ ×</span>
+        </div>
+        <div class="pane-body scroll">
+          {posts.length === 0 && (
+            <p class="articles-empty">
+              <span class="comment">// </span>no posts tagged <span class="hash">#</span>{slug} yet.
+            </p>
+          )}
+          {[...groupByMonth.entries()].map(([ym, entries]) => (
+            <div class="month-group">
+              <div class="month-label">
+                <span>{ym}</span>
+                <span class="month-name">{monthName(ym)}</span>
+                <span class="fill-dots">{fillDots}</span>
+              </div>
+              <ul>
+                {entries.map((entry) => (
+                  <li class="article-row">
+                    <span class="article-date">{mmdd(entry.data.pubDate)}</span>
+                    <span class={`article-kind ${entry.data.type}`}>{entry.data.type}</span>
+                    <a href={`/posts/${entry.id}/`} class="article-link">
+                      {entry.data.type === 'jot' && <span class="jot-dot">•</span>}
+                      {entry.data.title}
+                    </a>
+                    <span class="article-tags">
+                      {entry.data.tags.map((t) => (
+                        <><span class="hash">#</span>{t}{' '}</>
+                      ))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <p class="tags-back">
+            <a href="/tags/"><span class="comment">// </span>← all tags</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .tags-back { margin-top: 18px; font-size: 12px; }
+  .tags-back a { color: var(--dim); }
+  .tags-back a:hover { color: var(--accent); }
+  .tags-back .comment { color: var(--faint); }
+</style>

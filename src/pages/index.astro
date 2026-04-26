@@ -172,7 +172,7 @@ for (const entry of sorted) {
         <ul class="tags-list">
           {tags.map((tag) => (
             <li>
-              <a href="#" class="tag-row">
+              <a href={`/tags/${tag.slug}/`} class="tag-row">
                 <span class="tag-num">{tag.num}</span>
                 <span class="tag-label">{tag.label}</span>
                 <span class="tag-blurb">{tag.blurb}</span>
