@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — /fumi/notes" pageId="404">
+  <main class="main">
+    <div class="left-col">
+      <section class="pane hero-pane">
+        <div class="pane-header">
+          <span class="marker">■</span>
+          <span class="title">~/404</span>
+          <span class="sep">·</span>
+          <span>not_found.txt</span>
+          <span class="spacer"></span>
+          <span class="controls">─ □ ×</span>
+        </div>
+        <div class="pane-body">
+          <div class="hero-title"><span class="cursor">❯</span> 404 — not found</div>
+          <p class="hero-fullpath"><span class="comment">// </span>cat: requested path: No such file or directory</p>
+          <p class="hero-tagline">そのページは無いか、移動されたかも。</p>
+          <p class="hero-about">
+            <span class="comment">// </span>
+            <a href="/">/home に戻る</a>
+            <span class="sep"> · </span>
+            <a href="/rss.xml">rss</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>
