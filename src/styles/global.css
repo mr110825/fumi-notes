@@ -295,15 +295,32 @@ p { margin: 0; }
 }
 
 /* ── Activity pane ──────────────────────────────── */
-.activity-chart {
-  margin: 0;
+.contrib-grid {
+  display: block;
+  max-width: 100%;
+  height: auto;
   font-family: var(--mono);
-  font-size: 12px;
-  color: var(--fg);
-  line-height: 1.6;
-  white-space: pre;
-  overflow: hidden;
 }
+.contrib-month {
+  font-size: 9px;
+  fill: var(--dim);
+}
+.contrib-day {
+  font-size: 9px;
+  fill: var(--faint);
+}
+.contrib-cell { fill: var(--rule); transition: fill 0.1s; }
+.contrib-cell.level-0 { fill: var(--rule); }
+.contrib-cell.post-1 { fill: #2d4a1f; }
+.contrib-cell.post-2 { fill: #4d7a30; }
+.contrib-cell.post-3 { fill: #7fb53a; }
+.contrib-cell.post-4 { fill: var(--accent); }
+.contrib-cell.jot-1 { fill: #5a3a14; }
+.contrib-cell.jot-2 { fill: #8a571f; }
+.contrib-cell.jot-3 { fill: #c4761d; }
+.contrib-cell.jot-4 { fill: var(--warm); }
+.contrib-cell.future { fill: transparent; stroke: var(--rule); stroke-width: 0.5; }
+.contrib-cell:hover { stroke: var(--fg); stroke-width: 0.5; }
 .activity-footer {
   margin-top: 10px;
   font-size: 11px;
