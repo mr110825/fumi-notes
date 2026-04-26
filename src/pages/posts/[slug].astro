@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { normalizeTag, tagHref } from '../../utils/tags';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -50,6 +51,16 @@ const filename = `${post.id}.md`;
           </div>
 
           <h1 class="article-title">{post.data.title}</h1>
+
+          {post.data.tags.length > 0 && (
+            <div class="article-tags-row">
+              {post.data.tags.map((t) => (
+                <a href={tagHref(t)} class="article-tag">
+                  <span class="hash">#</span>{normalizeTag(t)}
+                </a>
+              ))}
+            </div>
+          )}
 
           <div class="article-body">
             <Content />

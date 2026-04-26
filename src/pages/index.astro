@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { normalizeTag, tagHref } from '../utils/tags';
 
 const all = await getCollection('blog', ({ data }) => !data.draft);
 const sorted = all.sort(
@@ -35,25 +36,19 @@ function mmdd(date: Date): string {
 const tagCounts = new Map<string, number>();
 for (const entry of sorted) {
   for (const tag of entry.data.tags) {
-    const key = tag.replace(/^#/, '').toLowerCase();
+    const key = normalizeTag(tag);
     tagCounts.set(key, (tagCounts.get(key) ?? 0) + 1);
   }
 }
 
-const tagDefs = [
-  { num: '01', slug: 'aws',          label: '#aws',          blurb: 'VPC / IAM / EKS 周辺' },
-  { num: '02', slug: 'terraform',    label: '#terraform',    blurb: 'module 設計・state の事故' },
-  { num: '03', slug: 'linux',        label: '#linux',        blurb: 'systemd・名前解決・tcpdump' },
-  { num: '04', slug: 'network',      label: '#network',      blurb: 'TCP/IP を自分に説明し直す' },
-  { num: '05', slug: 'security',     label: '#security',     blurb: 'IAM・sts・policy の読み方' },
-  { num: '06', slug: 'teaching',     label: '#teaching',     blurb: '新卒研修・入門解説の副産物' },
-  { num: '07', slug: 'fundamentals', label: '#fundamentals', blurb: '毎年描き直す基礎' },
-  { num: '08', slug: 'jot',          label: '#jot',          blurb: '今日知った小さなこと' },
-];
-const tags = tagDefs.map((t) => ({
-  ...t,
-  count: tagCounts.get(t.slug) ?? 0,
-}));
+const tags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([slug, count], i) => ({
+    num: String(i + 1).padStart(2, '0'),
+    slug,
+    label: `#${slug}`,
+    count,
+  }));
 
 const now = new Date();
 type MonthBucket = { ym: string; posts: number; jots: number };
@@ -147,7 +142,9 @@ for (const entry of sorted) {
                     </a>
                     <span class="article-tags">
                       {entry.data.tags.map((t) => (
-                        <><span class="hash">#</span>{t}{' '}</>
+                        <a href={tagHref(t)} class="article-tag">
+                          <span class="hash">#</span>{normalizeTag(t)}
+                        </a>
                       ))}
                     </span>
                   </li>
@@ -169,13 +166,18 @@ for (const entry of sorted) {
         <span class="controls">─ □ ×</span>
       </div>
       <div class="pane-body">
+        {tags.length === 0 && (
+          <p class="articles-empty">
+            <span class="comment">// </span>no tags yet.
+          </p>
+        )}
         <ul class="tags-list">
           {tags.map((tag) => (
             <li>
-              <a href={`/tags/${tag.slug}/`} class="tag-row">
+              <a href={tagHref(tag.slug)} class="tag-row">
                 <span class="tag-num">{tag.num}</span>
                 <span class="tag-label">{tag.label}</span>
-                <span class="tag-blurb">{tag.blurb}</span>
+                <span class="tag-blurb"></span>
                 <span class="tag-count">{tag.count}</span>
               </a>
             </li>

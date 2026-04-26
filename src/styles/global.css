@@ -227,8 +227,32 @@ p { margin: 0; }
   font-size: 11.5px;
   text-align: right;
   white-space: nowrap;
+  display: inline-flex;
+  gap: 6px;
+  justify-content: flex-end;
 }
 .article-tags .hash { color: var(--faint); }
+.article-tag {
+  color: var(--dim);
+  border-bottom: 1px solid transparent;
+  transition: color 0.1s, border-bottom-color 0.1s;
+}
+.article-tag:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.article-tag:hover .hash { color: var(--accent); }
+
+.article-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: -16px 0 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.article-tags-row .article-tag { color: var(--dim); }
+.article-tags-row .hash { color: var(--faint); }
 
 .articles-empty {
   color: var(--dim);
