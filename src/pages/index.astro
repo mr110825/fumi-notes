@@ -181,8 +181,7 @@ const totalDays = new Set([...dailyPosts.keys(), ...dailyJots.keys()]).size;
                   <li class="article-row">
                     <span class="article-date">{mmdd(entry.data.pubDate)}</span>
                     <span class={`article-kind ${entry.data.type}`}>{entry.data.type}</span>
-                    <a href={`/posts/${entry.id}/`} class="article-link">
-                      {entry.data.type === 'jot' && <span class="jot-dot">•</span>}
+                    <a href={`/posts/${entry.id}/`} class={`article-link ${entry.data.type}`}>
                       {entry.data.title}
                     </a>
                     <span class="article-tags">
@@ -311,3 +310,8 @@ const totalDays = new Set([...dailyPosts.keys(), ...dailyJots.keys()]).size;
     </section>
   </main>
 </BaseLayout>
+
+<style>
+  .hero-about,
+  .hero-about .comment { color: var(--accent); }
+</style>

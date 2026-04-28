@@ -211,16 +211,16 @@ p { margin: 0; }
   font-family: var(--sans);
   font-size: 13.5px;
   line-height: 1.45;
+  justify-self: start;
   border-bottom: 1px solid transparent;
   transition: color 0.1s, border-bottom-color 0.1s;
+}
+.article-link.jot {
+  color: var(--warm);
 }
 .article-link:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
-}
-.article-link .jot-dot {
-  color: var(--warm);
-  margin-right: 6px;
 }
 .article-tags {
   color: var(--dim);
@@ -684,7 +684,6 @@ p { margin: 0; }
   .article-date { font-size: 11px; }
   .article-kind { display: none; }
   .article-link { font-size: 13px; }
-  .article-link .jot-dot { display: none; }
   .article-tags {
     grid-column: 2 / 3;
     font-size: 11px;
