@@ -342,18 +342,8 @@ p { margin: 0; }
   gap: 10px;
   flex-shrink: 0;
 }
-.bottom-bar .mode-tag {
-  color: var(--bg);
-  background: var(--accent);
-  padding: 1px 8px;
-  font-weight: 600;
-}
-.bottom-bar a { color: var(--fg); }
-.bottom-bar .sep { color: var(--faint); }
+.bottom-bar .sep-pipe { color: var(--faint); padding: 0 2px; }
 .bottom-bar .spacer { flex: 1; }
-
-.size-desktop { display: inline; }
-.size-mobile { display: none; }
 
 /* ── Article page ───────────────────────────────── */
 .article-main {
@@ -665,8 +655,6 @@ p { margin: 0; }
   .top-bar { padding: 5px 10px; font-size: 10.5px; }
   .top-bar .win-tags,
   .top-bar .win-about { display: none; }
-  .size-desktop { display: none; }
-  .size-mobile { display: inline; }
 
   /* Stack: hero → tags → articles → activity */
   .main {
