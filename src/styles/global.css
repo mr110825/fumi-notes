@@ -71,6 +71,9 @@ p { margin: 0; }
   grid-template-rows: auto 1fr;
   gap: 6px;
   padding: 6px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 .left-col {
   grid-column: 1;
