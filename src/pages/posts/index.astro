@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { normalizeTag, tagHref } from '../utils/tags';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { normalizeTag, tagHref } from '../../utils/tags';
 
 const all = await getCollection('blog', ({ data }) => !data.draft);
 const sorted = all.sort(
@@ -34,7 +34,7 @@ function mmdd(date: Date): string {
 }
 ---
 
-<BaseLayout title="articles — /fumi/notes" pageId="articles">
+<BaseLayout title="posts — /fumi/notes" pageId="posts">
   <main class="main">
     <div class="left-col">
       <section class="pane articles-pane">

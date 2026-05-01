@@ -50,7 +50,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <span class="site-tag">/fumi/notes</span>
       <span class="dim">[0]</span>
       <a href="/" class={pageId === 'home' ? 'win-active' : 'dim'}>1:home{pageId === 'home' ? '*' : ''}</a>
-      <a href="/articles" class={pageId === 'articles' ? 'win-active' : 'dim'}>2:articles{pageId === 'articles' ? '*' : ''}</a>
+      <a href="/posts/" class={pageId === 'posts' ? 'win-active' : 'dim'}>2:posts{pageId === 'posts' ? '*' : ''}</a>
       <a href="/tags/" class={`${pageId === 'tags' ? 'win-active' : 'dim'} win-tags`}>3:tags{pageId === 'tags' ? '*' : ''}</a>
       <a href="/about" class={`${pageId === 'about' ? 'win-active' : 'dim'} win-about`}>4:about{pageId === 'about' ? '*' : ''}</a>
       <span class="spacer"></span>
