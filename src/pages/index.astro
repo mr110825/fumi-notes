@@ -200,36 +200,6 @@ const totalDays = new Set([...dailyPosts.keys(), ...dailyJots.keys()]).size;
       </section>
     </div>
 
-    <section class="pane tags-pane">
-      <div class="pane-header">
-        <span class="marker">■</span>
-        <span class="title">~/tags</span>
-        <span class="sep">·</span>
-        <span>{tags.length} tags</span>
-        <span class="spacer"></span>
-        <span class="controls">─ □ ×</span>
-      </div>
-      <div class="pane-body">
-        {tags.length === 0 && (
-          <p class="articles-empty">
-            <span class="comment">// </span>no tags yet.
-          </p>
-        )}
-        <ul class="tags-list">
-          {tags.map((tag) => (
-            <li>
-              <a href={tagHref(tag.slug)} class="tag-row">
-                <span class="tag-num">{tag.num}</span>
-                <span class="tag-label">{tag.label}</span>
-                <span class="tag-blurb"></span>
-                <span class="tag-count">{tag.count}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-
     <section class="pane activity-pane">
       <div class="pane-header">
         <span class="marker">■</span>
@@ -306,6 +276,36 @@ const totalDays = new Set([...dailyPosts.keys(), ...dailyJots.keys()]).size;
           <span class="faint"> · </span>
           <span>{totalDays} day{totalDays === 1 ? '' : 's'} active</span>
         </div>
+      </div>
+    </section>
+
+    <section class="pane tags-pane">
+      <div class="pane-header">
+        <span class="marker">■</span>
+        <span class="title">~/tags</span>
+        <span class="sep">·</span>
+        <span>{tags.length} tags</span>
+        <span class="spacer"></span>
+        <span class="controls">─ □ ×</span>
+      </div>
+      <div class="pane-body">
+        {tags.length === 0 && (
+          <p class="articles-empty">
+            <span class="comment">// </span>no tags yet.
+          </p>
+        )}
+        <ul class="tags-list">
+          {tags.map((tag) => (
+            <li>
+              <a href={tagHref(tag.slug)} class="tag-row">
+                <span class="tag-num">{tag.num}</span>
+                <span class="tag-label">{tag.label}</span>
+                <span class="tag-blurb"></span>
+                <span class="tag-count">{tag.count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   </main>
