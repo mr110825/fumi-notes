@@ -86,6 +86,11 @@ type: "${type}"
 draft: true
 ---
 
+
+
+## 変更履歴
+
+- ${date_str}: 初版公開
 EOF
 
 echo "Created: ${target#$repo_root/}"
