@@ -88,3 +88,7 @@ public class SwitchSampleArrow {
 - [Oracle-Java_switch式および文](https://docs.oracle.com/javase/jp/23/language/switch-expressions-and-statements.html#GUID-BA4F63E3-4823-43C6-A5F3-BAA4A2EF3ADC)
 - [Oracle-Java_Switch式](https://docs.oracle.com/javase/jp/14/language/switch-expressions.html)
 
+## 変更履歴
+
+- 2026-04-26: 初版公開
+
