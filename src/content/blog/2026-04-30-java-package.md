@@ -1,7 +1,7 @@
 ---
 title: "Javaにおけるパッケージ"
 pubDate: 2026-04-30
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

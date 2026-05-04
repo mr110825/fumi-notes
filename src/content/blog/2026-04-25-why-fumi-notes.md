@@ -1,7 +1,7 @@
 ---
 title: "個人ブログを始めた理由"
 pubDate: 2026-04-25
-type: "post"
+type: "idea"
 draft: false
 tags: [learning]
 ---

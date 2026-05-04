@@ -33,8 +33,8 @@ Node.js 22.12 以上推奨(動作確認: 24.5 / Cloudflare ビルド: 24.13)。
 雛形生成:
 
 ```sh
-scripts/new-post.sh "記事タイトル" --slug my-slug          # post
-scripts/new-post.sh "短いメモ"     --slug my-slug --type jot
+scripts/new-post.sh "記事タイトル" --slug my-slug              # idea (default)
+scripts/new-post.sh "技術メモ"     --slug my-slug --type tech
 ```
 
 `src/content/blog/YYYY-MM-DD-<slug>.md` を `draft: true` で生成する。手で書く場合は以下の Markdown を配置:
@@ -43,11 +43,16 @@ scripts/new-post.sh "短いメモ"     --slug my-slug --type jot
 ---
 title: "記事タイトル"
 pubDate: 2026-04-25
-type: "post"        # "post" | "jot"
+type: "idea"        # "idea"(default) | "tech"
 draft: true         # ビルドから除外
 tags: [astro]
 ---
 ```
+
+`type` の使い分け(Zenn の tech / idea 準拠):
+
+- **`tech`**: 実装・検証・技術的洞察など具体的な内容(言語仕様、セットアップ手順、デバッグログ等)
+- **`idea`**: 技術に直接関係しないトピックや抽象的な考え方・まとめ(キャリア考察、学習法、所感、ふりかえり等)
 
 `main` への push で自動再デプロイ(Workers Builds 経由、約1〜2分)。
 

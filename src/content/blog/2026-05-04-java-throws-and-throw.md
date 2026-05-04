@@ -1,7 +1,7 @@
 ---
 title: "Javaのthrowsとthrow — 似て非なる2つのキーワード"
 pubDate: 2026-05-04
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

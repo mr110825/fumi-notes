@@ -1,7 +1,7 @@
 ---
 title: "Javaの例外処理と例外クラス階層"
 pubDate: 2026-05-04
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

@@ -1,7 +1,7 @@
 ---
 title: "「12歳に説明する」で学習の穴を見つける、ファインマンテクニック実行フロー"
 pubDate: 2026-05-04
-type: "post"
+type: "idea"
 draft: false
 tags: [learning]
 ---

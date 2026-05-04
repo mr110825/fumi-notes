@@ -3,14 +3,14 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: scripts/new-post.sh <title> [--slug <slug>] [--type post|jot]
+Usage: scripts/new-post.sh <title> [--slug <slug>] [--type tech|idea]
 
 Creates src/content/blog/YYYY-MM-DD-<slug>.md with minimal front matter
 (draft: true). Date is taken from `date +%F`.
 
 Options:
   --slug <slug>   Slug for filename (required if title contains non-ASCII).
-  --type <type>   "post" (default) or "jot".
+  --type <type>   "idea" (default) or "tech".
 EOF
 }
 
@@ -21,7 +21,7 @@ fi
 
 title=""
 slug=""
-type="post"
+type="idea"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -51,8 +51,8 @@ if [[ -z "$title" ]]; then
   exit 1
 fi
 
-if [[ "$type" != "post" && "$type" != "jot" ]]; then
-  echo "Error: --type must be 'post' or 'jot' (got: $type)" >&2
+if [[ "$type" != "tech" && "$type" != "idea" ]]; then
+  echo "Error: --type must be 'tech' or 'idea' (got: $type)" >&2
   exit 1
 fi
 

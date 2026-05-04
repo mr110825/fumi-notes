@@ -1,7 +1,7 @@
 ---
 title: "Javaのswitch文"
 pubDate: 2026-04-26
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

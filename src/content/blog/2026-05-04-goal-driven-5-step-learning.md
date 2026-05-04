@@ -1,7 +1,7 @@
 ---
 title: "学習が続かなかった自分が、ゴール起点の5ステップに落ち着いた話"
 pubDate: 2026-05-04
-type: "post"
+type: "idea"
 draft: false
 tags: [learning]
 ---

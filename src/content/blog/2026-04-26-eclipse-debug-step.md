@@ -1,7 +1,7 @@
 ---
 title: "Eclipseのデバッグモードで1ステップずつ動きを確認する"
 pubDate: 2026-04-26
-type: "jot"
+type: "tech"
 draft: false
 tags: [java, eclipse]
 ---

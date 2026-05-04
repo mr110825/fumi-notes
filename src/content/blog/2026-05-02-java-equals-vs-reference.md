@@ -1,7 +1,7 @@
 ---
 title: "Javaの == と equals() の使い分け"
 pubDate: 2026-05-02
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Neovim on WSL でクリップボード連携を設定する"
 pubDate: 2026-04-26
-type: "jot"
+type: "tech"
 draft: false
 tags: [neovim, wsl]
 description: "WSL2 上の Neovim から win32yank.exe 経由で Windows クリップボードと y/p 連携する手順"

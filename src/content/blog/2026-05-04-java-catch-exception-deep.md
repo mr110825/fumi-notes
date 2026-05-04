@@ -1,7 +1,7 @@
 ---
 title: "catch (Exception e) を深掘り — 多態性・スコープ・型の絞り方"
 pubDate: 2026-05-04
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---

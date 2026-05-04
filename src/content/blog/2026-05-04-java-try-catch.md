@@ -1,7 +1,7 @@
 ---
 title: "Javaのtry-catch — 複数catch・マルチキャッチ・finally"
 pubDate: 2026-05-04
-type: "jot"
+type: "tech"
 draft: false
 tags: [java]
 ---
