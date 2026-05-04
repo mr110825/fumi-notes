@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { normalizeTag, tagHref } from '../../utils/tags';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -50,6 +50,9 @@ const filename = `${post.id}.md`;
             <span class="rule">────────────────────────────────────────</span>
           </div>
 
+          {import.meta.env.DEV && post.data.draft && (
+            <div><span class="draft-banner">[DRAFT — visible only in dev]</span></div>
+          )}
           <h1 class="article-title">{post.data.title}</h1>
 
           {post.data.tags.length > 0 && (

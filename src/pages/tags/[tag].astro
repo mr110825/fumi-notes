@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { normalizeTag, tagHref } from '../../utils/tags';
 
 export async function getStaticPaths() {
-  const all = await getCollection('blog', ({ data }) => !data.draft);
+  const all = await getCollection('blog', ({ data }) => import.meta.env.DEV || !data.draft);
   const slugs = new Set<string>();
   for (const entry of all) {
     for (const t of entry.data.tags) {
@@ -81,6 +81,7 @@ function mmdd(date: Date): string {
                     <span class="article-date">{mmdd(entry.data.pubDate)}</span>
                     <span class={`article-kind ${entry.data.type}`}>{entry.data.type}</span>
                     <a href={`/posts/${entry.id}/`} class={`article-link ${entry.data.type}`}>
+                      {import.meta.env.DEV && entry.data.draft && <span class="draft-badge">[DRAFT]</span>}
                       {entry.data.title}
                     </a>
                     <span class="article-tags">
