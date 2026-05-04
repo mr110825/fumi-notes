@@ -674,7 +674,8 @@ p { margin: 0; }
 
   .top-bar { padding: 5px 10px; font-size: 10.5px; }
   .top-bar .win-tags,
-  .top-bar .win-about { display: none; }
+  .top-bar .win-about,
+  .top-bar .win-search { display: none; }
 
   /* Stack: hero → activity → articles → tags */
   .main {
