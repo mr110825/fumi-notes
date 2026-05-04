@@ -3,7 +3,7 @@ title: "Claudeを教師役にして、Rust完全初学者でAtCoder Beginners Se
 pubDate: 2026-05-05
 type: "idea"
 draft: false
-tags: [rust, learning]
+tags: [rust, learning, claude]
 ---
 
 ## はじめに

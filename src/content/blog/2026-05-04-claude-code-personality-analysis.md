@@ -3,7 +3,7 @@ title: "Claude Code に自分のパーソナリティ分析させた話"
 pubDate: 2026-05-04
 type: "idea"
 draft: false
-tags: []
+tags: [claude]
 ---
 
 ## はじめに
