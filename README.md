@@ -14,13 +14,14 @@
 | CSS | Vanilla(React/Vue/Svelte/Tailwind 不採用) |
 | フォント | JetBrains Mono + Noto Sans JP(Google Fonts CDN) |
 | 配色 | tmux/Classic(`#101214` × `#a6e22e` × `#fd971f`) |
+| 全文検索 | [Pagefind](https://pagefind.app)(SSG向け、`/search` で利用) |
 
 ## ローカル開発
 
 ```sh
 npm install         # 依存インストール
 npm run dev         # localhost:4321 で開発サーバー起動
-npm run build       # 本番ビルド → dist/
+npm run build       # 本番ビルド → dist/(Pagefind 索引も生成)
 npm run preview     # 本番ビルドのプレビュー
 npx astro check     # 型チェック
 ```
