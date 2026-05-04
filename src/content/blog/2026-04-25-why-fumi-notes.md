@@ -3,7 +3,7 @@ title: "個人ブログを始めた理由"
 pubDate: 2026-04-25
 type: "post"
 draft: false
-tags: []
+tags: [learning]
 ---
 自分はメモをPKM（Private Knowledge Management）としてストックしており、2026年4月時点で1900件程度のメモが貯まり、資格勉強などで活用している。
 メモを利用する体制が整っているのに、なぜ個人ブログを始めたのか。

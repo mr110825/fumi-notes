@@ -3,7 +3,7 @@ title: "IT資格を10個取って気づいた勉強法の不足"
 pubDate: 2026-05-02
 type: "post"
 draft: false
-tags: []
+tags: [learning]
 ---
 
 ## はじめに
