@@ -66,6 +66,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   #search { margin-top: 0.75rem; }
 
   /* ── Form & prompt ─────────────────────────────── */
+  /*
+   * 注意: Pagefind の <form> は input + clear ボタン + 結果ドロワーを
+   * すべて内包する。結果表示で form 自体の高さが伸びるため、
+   * `top: 50%` 等の form 中央基準だと擬似要素・クリアボタンが
+   * 下方向にズレる。input(高さ 54px*scale) の縦中央に合わせて
+   * 固定値で配置する。
+   */
   #search .pagefind-ui__form { position: relative; }
   /* デフォルトの虫眼鏡SVGを ❯ プロンプトに差し替え */
   #search .pagefind-ui__form::before {
@@ -76,12 +83,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--accent);
     font-family: var(--mono);
     font-weight: 700;
-    font-size: calc(20px * var(--pagefind-ui-scale));
+    font-size: calc(22px * var(--pagefind-ui-scale));
     line-height: 1;
     width: auto;
     height: auto;
-    top: 50%;
-    left: calc(16px * var(--pagefind-ui-scale));
+    top: calc(27px * var(--pagefind-ui-scale));
+    left: calc(18px * var(--pagefind-ui-scale));
     transform: translateY(-50%);
     opacity: 1;
     pointer-events: none;
@@ -89,15 +96,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* ── Search input ──────────────────────────────── */
   #search .pagefind-ui__search-input {
-    height: calc(48px * var(--pagefind-ui-scale));
-    padding: 0 calc(80px * var(--pagefind-ui-scale)) 0 calc(40px * var(--pagefind-ui-scale));
+    height: calc(54px * var(--pagefind-ui-scale));
+    padding: 0 calc(86px * var(--pagefind-ui-scale)) 0 calc(44px * var(--pagefind-ui-scale));
     background: var(--bg);
     color: var(--fg);
     border: 1px solid var(--rule);
     border-radius: 0;
     font-family: var(--mono);
     font-weight: 400;
-    font-size: calc(16px * var(--pagefind-ui-scale));
+    font-size: calc(18px * var(--pagefind-ui-scale));
     letter-spacing: 0;
     transition: border-color 0.12s, box-shadow 0.12s;
   }
@@ -113,18 +120,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* ── Clear button (terminal key風) ──────────────── */
+  /* 同じく input の縦中央(27px*scale)基準で固定配置 */
   #search .pagefind-ui__search-clear {
-    top: 50%;
+    top: calc(27px * var(--pagefind-ui-scale));
     right: calc(8px * var(--pagefind-ui-scale));
     transform: translateY(-50%);
-    height: calc(26px * var(--pagefind-ui-scale));
-    padding: 0 calc(10px * var(--pagefind-ui-scale));
+    height: calc(30px * var(--pagefind-ui-scale));
+    padding: 0 calc(11px * var(--pagefind-ui-scale));
     background: var(--status);
     border: 1px solid var(--rule);
     border-radius: 0;
     color: var(--dim);
     font-family: var(--mono);
-    font-size: calc(12px * var(--pagefind-ui-scale));
+    font-size: calc(13px * var(--pagefind-ui-scale));
     letter-spacing: 0.04em;
     transition: color 0.1s, border-color 0.1s;
   }
@@ -140,7 +148,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--dim);
     font-family: var(--mono);
     font-weight: 400;
-    font-size: calc(12px * var(--pagefind-ui-scale));
+    font-size: calc(13px * var(--pagefind-ui-scale));
     letter-spacing: 0.02em;
     border-bottom: 1px dashed var(--rule);
   }
@@ -165,7 +173,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   #search .pagefind-ui__result-title {
     font-family: var(--mono);
     font-weight: 500;
-    font-size: calc(15px * var(--pagefind-ui-scale));
+    font-size: calc(17px * var(--pagefind-ui-scale));
     line-height: 1.5;
     position: relative;
     padding-left: 1.4em;
@@ -191,7 +199,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
   #search .pagefind-ui__result-nested .pagefind-ui__result-title {
     padding-left: 1.4em;
-    font-size: calc(13px * var(--pagefind-ui-scale));
+    font-size: calc(14.5px * var(--pagefind-ui-scale));
   }
   #search .pagefind-ui__result-nested .pagefind-ui__result-title::before {
     content: "↳";
@@ -206,7 +214,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   #search .pagefind-ui__result-excerpt {
     font-family: var(--sans);
-    font-size: calc(13.5px * var(--pagefind-ui-scale));
+    font-size: calc(14.5px * var(--pagefind-ui-scale));
     line-height: 1.7;
     color: var(--fg);
     margin-top: 4px;
@@ -230,9 +238,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid var(--rule);
     color: var(--dim);
     border-radius: 0;
-    padding: 1px 7px;
+    padding: 2px 8px;
     font-family: var(--mono);
-    font-size: calc(11.5px * var(--pagefind-ui-scale));
+    font-size: calc(12px * var(--pagefind-ui-scale));
   }
 
   /* ── Filter panel(必要になったら) ─────────────── */
@@ -258,7 +266,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   #search .pagefind-ui__filter-label {
     font-family: var(--mono);
     color: var(--dim);
-    font-size: calc(12.5px * var(--pagefind-ui-scale));
+    font-size: calc(13.5px * var(--pagefind-ui-scale));
   }
 
   /* ── Load more button ──────────────────────────── */
