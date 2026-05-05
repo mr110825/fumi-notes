@@ -1,6 +1,7 @@
 ---
 title: "JavaのMap — HashMapの使い方と代表メソッド"
 pubDate: 2026-05-05
+updatedDate: 2026-05-05
 type: "tech"
 draft: false
 tags: [java]
@@ -80,6 +81,109 @@ public class Main {
 
 `put` の戻り値が「上書き前の値」になっている点は意外と便利で、「初回登録か上書きか」を見分けるのに使える（戻り値が `null` なら新規登録）。
 
+## 全要素を反復する — `keySet()` で取り出す
+
+特定のキーで `get()` するだけでなく、Mapに入っている **全てのキー・値ペアを順に処理したい** 場面がある。Mapのメリットを活かすなら、`keySet()` で「Map自身に持っているキー一覧を聞く」のが定石。
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        Map<Integer, String> greetByTime = new HashMap<>();
+        greetByTime.put(9, "おはようございます");
+        greetByTime.put(12, "こんにちは");
+        greetByTime.put(18, "こんばんは");
+        greetByTime.put(22, "おやすみなさい");
+
+        for (int time : greetByTime.keySet()) {
+            System.out.println(time + "時：" + greetByTime.get(time));
+        }
+    }
+}
+```
+
+`keySet()` はMapに登録されている **キーの集合（`Set<K>`）** を返す。拡張for文で回せば、登録キーの数だけ処理できる。キーが `9, 12, 18, 22` の4つなら4回ループ、`100, 200, 300` の3つなら3回ループする。
+
+「キーが何個あるか・何の値かを事前に知らなくても処理できる」のがMapらしい書き方。
+
+## HashMap は挿入順を保証しない
+
+上記コードの実行結果は、`put` した順とは違う **意外な順序** になる。
+
+```text
+18時：こんばんは
+22時：おやすみなさい
+9時：おはようございます
+12時：こんにちは
+```
+
+`put` は `9 → 12 → 18 → 22` の順だったが、出力は `18 → 22 → 9 → 12`。これは `HashMap` が **ハッシュ計算でバケット位置を決める** ため。
+
+`Integer.hashCode()` は値そのままを返し、デフォルト容量16の `HashMap` ではバケット位置が `key & 15`（下位4bit）で決まる。
+
+| キー | バケット位置（`key & 15`）|
+|---|---|
+| 9 | 9 |
+| 12 | 12 |
+| 18 | 2 |
+| 22 | 6 |
+
+→ バケット番号順（2 → 6 → 9 → 12）に取り出されるため、**`18, 22, 9, 12` の順** で出力される。JDKバージョンや初期容量で具体的な順は変わるが、いずれにせよ「挿入順を保証しない」のは確定仕様。
+
+順序を保証したい場合は、Map実装クラスの差し替えで対応できる。
+
+| 実装クラス | 順序の保証 |
+|---|---|
+| `HashMap` | なし |
+| `LinkedHashMap` | **挿入順** |
+| `TreeMap` | **キー昇順** |
+
+差し替えは1行で済む（`new HashMap<>()` を `new LinkedHashMap<>()` に変えるだけ）。実装クラスの選び方は [JavaのMap実装クラスの選び方 — HashMap/LinkedHashMap/TreeMap](/posts/2026-05-05-java-map-implementation-classes/) で深掘りしている。
+
+## よくある罠 — Listの感覚で `get(i)` を呼ぶ
+
+Listを覚えた直後にMapを触ると、つい以下のように書いてしまいがち。
+
+```java
+// 動かない誤りパターン
+Map<Integer, String> greetByTime = new HashMap<>();
+greetByTime.put(9, "おはようございます");
+greetByTime.put(12, "こんにちは");
+greetByTime.put(18, "こんばんは");
+greetByTime.put(22, "おやすみなさい");
+
+for (int i = 0; i < greetByTime.size(); i++) {
+    System.out.println(i + "時：" + greetByTime.get(i));
+}
+```
+
+このコードの出力は **全て `null`**。
+
+```text
+0時：null
+1時：null
+2時：null
+3時：null
+```
+
+理由：
+
+- `greetByTime.get(0)` は **「キー `0` に対応する値」を探しに行く**
+- 登録されているキーは `9, 12, 18, 22` で、`0, 1, 2, 3` は存在しない
+- 存在しないキーへの `get` は `null` を返す（仕様）
+
+**Listはインデックス（0から自動採番される連番）でアクセス、Mapはキー（自分で決めた値）でアクセス** という根本的な違いを混同するとハマる。
+
+| | List | Map |
+|---|---|---|
+| アクセス方法 | インデックス（自動採番） | キー（任意の値） |
+| `get(0)` の意味 | 先頭の要素 | キー `0` に対応する値 |
+| `size()` の意味 | 要素数 | キー・値ペアの数 |
+
+Mapは **キー集合を `keySet()` で取得して回す** か、**事前に分かっているキーで直接 `get(key)` する** のが正しい使い方。
+
 ## 型パラメータの制約 — 2つの型を指定する
 
 `Map<キーの型, 値の型>` という形で **2つの型パラメータ** を指定する。Listと同じく **参照型のみ** で、基本型はラッパークラスを使う。
@@ -108,14 +212,18 @@ System.out.println(m.get(null)); // "no-key"
 
 - Mapは「キー → 値」の対応を扱うコレクション
 - キーは重複不可・値は重複可・アクセスはキー経由
-- 実装クラスは基本 `HashMap` でよい（順序が必要なら `LinkedHashMap`、ソート順が必要なら `TreeMap`）
+- 全要素を反復するなら `keySet()` で「Map自身にキー一覧を聞く」
+- `HashMap` は **挿入順を保証しない**（バケット位置は `key & (容量-1)` で決まる）。順序が要件なら `LinkedHashMap`/`TreeMap` に差し替える
+- Listの感覚で `get(0), get(1), ...` と書くと全て `null` になる罠に注意
 - 型パラメータは2つ、`Map<K, V>` の形で指定する。基本型はラッパークラスで代替
 
 関連記事：
 
+- [JavaのMap実装クラスの選び方 — HashMap/LinkedHashMap/TreeMap](/posts/2026-05-05-java-map-implementation-classes/)
 - [JavaのList — ArrayListの使い方と代表メソッド](/posts/2026-05-05-java-collection-list/)
 - [JavaのSet — HashSetの使い方と重複排除](/posts/2026-05-05-java-collection-set/)
 
 ## 変更履歴
 
 - 2026-05-05: 初版公開
+- 2026-05-05: 「`keySet()` で全要素を反復」「HashMapは挿入順を保証しない」「Listの感覚で `get(i)` を呼ぶ罠」の3節を追加
