@@ -2,7 +2,7 @@
 title: "Neovim 基本操作チートシート"
 pubDate: 2026-05-05
 type: "tech"
-draft: true
+draft: false
 tags: [neovim, cheatsheet]
 description: "VSCode から Neovim へ移行するための基本操作チートシート。モード/移動/編集/検索/バッファ/レジスタ/マクロを 1 ページに集約。"
 ---
