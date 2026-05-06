@@ -3,7 +3,7 @@ title: "vmstatの読み方:CPU/メモリ/ディスクI/Oのボトルネック判
 pubDate: 2026-05-05
 type: "tech"
 draft: false
-tags: [linux, lpic]
+tags: [linux, lpic201]
 description: "vmstat の出力からボトルネックがCPU/メモリ/ディスクI/Oのどこにあるかを判定する手順を、サンプル出力2例で読み解く。"
 ---
 
