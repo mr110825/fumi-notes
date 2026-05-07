@@ -8,11 +8,14 @@ const sorted = all.sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
 );
 
+const RECENT_LIMIT = 10;
+const recent = sorted.slice(0, RECENT_LIMIT);
+
 const fillDots = '·'.repeat(180);
 
 type Entry = (typeof sorted)[number];
 const groupByMonth = new Map<string, Entry[]>();
-for (const entry of sorted) {
+for (const entry of recent) {
   const ym = entry.data.pubDate.toISOString().slice(0, 7);
   const arr = groupByMonth.get(ym) ?? [];
   arr.push(entry);
@@ -159,7 +162,7 @@ const totalDays = new Set([...dailyIdeas.keys(), ...dailyTechs.keys()]).size;
           <span class="marker">■</span>
           <span class="title">~/posts</span>
           <span class="sep">·</span>
-          <span>{sorted.length}/{sorted.length}</span>
+          <span>{recent.length}/{sorted.length}</span>
           <span class="spacer"></span>
           <span class="controls">─ □ ×</span>
         </div>
